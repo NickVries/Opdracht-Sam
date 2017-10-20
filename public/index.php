@@ -8,4 +8,6 @@ require dirname(dirname(__FILE__)) . '/vendor/autoload.php';
 
 require Helpers::root() . "/core/bootstrap.php";
 
-QueryBuilder::query()->from('users')->where('age', '>', 18)->first();
+$first = QueryBuilder::query()->from('users')->where('age', '>', 18)->first();
+
+var_dump($first);

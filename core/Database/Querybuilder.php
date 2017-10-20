@@ -7,6 +7,7 @@ use Nick\Framework\App;
 class Querybuilder
 {
     private $pdo;
+    private $adults;
 
     public function __construct($pdo)
     {
@@ -15,14 +16,18 @@ class Querybuilder
 
     public function first()
     {
-        return $this[0];
+        return reset($this->adults);
     }
 
     public function where($column, $operator, $value)
     {
-        
-        //Filter array of users to filter out users based on $column and $value.
-        //return array of users where conditions apply.
+        $this->adults = array_filter($this->adults,
+            function ($adult) use ($column, $operator, $value) {
+                return eval("return \$adult->$column $operator \$value;");
+            }
+        );
+
+        return $this;
     }
 
     public function from($table)
@@ -31,15 +36,14 @@ class Querybuilder
         //choose table to retrieve data.
         $statement->execute();
 
-        return $statement->fetchAll(\PDO::FETCH_CLASS);
+        $this->adults = $statement->fetchAll(\PDO::FETCH_CLASS);
+
+        return $this;
         //return array of all users (objects).
     }
-
 
     public static function query()
     {
         return App::get('database');
-        // returns PDO object.
     }
-
 }
