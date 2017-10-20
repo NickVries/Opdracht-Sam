@@ -4,15 +4,19 @@ namespace Nick\Framework;
 
 class App
 {
-    protected static $registry = [];
+    public static $registry = [];
 
     public static function bind($key, $value)
     {
         self::$registry[$key] = $value;
     }
 
-    protected static function get($key)
+    public static function get($key)
     {
+        if (! array_key_exists($key, self::$registry)) {
+            throw new \Exception("No {$key} is bound in the container.");
+        }
+
         return self::$registry[$key];
     }
 }
