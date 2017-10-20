@@ -23,7 +23,14 @@ class Querybuilder
     {
         $this->adults = array_filter($this->adults,
             function ($adult) use ($column, $operator, $value) {
-                return eval("return \$adult->$column $operator \$value;");
+                switch ($operator) {
+                    case '>':
+                        return $adult->$column > $value;
+                        break;
+                    case '<':
+                        return $adult->$column < $value;
+                        break;
+                }
             }
         );
 
