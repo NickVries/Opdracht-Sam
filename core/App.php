@@ -17,6 +17,10 @@ class App
             throw new \Exception("No {$key} is bound in the container.");
         }
 
+        if (is_callable(self::$registry[$key])) {
+            return (self::$registry[$key])();
+        }
+
         return self::$registry[$key];
     }
 }

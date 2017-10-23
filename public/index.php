@@ -1,13 +1,20 @@
 <?php
 
-use Nick\Framework\App;
-use Nick\Framework\Database\Querybuilder;
+use Nick\Framework\Database\QueryBuilder;
 use Nick\Framework\Helpers;
+use Nick\Framework\User;
 
 require dirname(dirname(__FILE__)) . '/vendor/autoload.php';
 
 require Helpers::root() . "/core/bootstrap.php";
 
-$first = QueryBuilder::query()->from('users')->where('age', '>', 18)->first();
 
-var_dump($first);
+
+//$firstAge18Shady = QueryBuilder::query()->from('users')->where('age', '>', 18)->where('name', '=', 'Shady Khattab')->first();
+
+//var_dump($firstAge18Shady);
+
+$user = User::query()->where('age', '>', 18)->first();
+//$user = User::query()->where('age', '>', 18)->limit(5)->get();
+
+var_dump($user);
