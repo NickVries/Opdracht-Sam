@@ -8,9 +8,12 @@ use Nick\Framework\User;
 class QueryBuilder
 {
     private $pdo;
-    private $query;
     private $values = [];
     private $className = \stdClass::class;
+    private $where = [];
+    private $offset;
+    private $limit = 'LIMIT 18446744073709551615';
+    private $table;
 
     public function __construct($pdo)
     {
@@ -19,23 +22,25 @@ class QueryBuilder
 
     public function first()
     {
-        $statement = $this->pdo->prepare("{$this->query} LIMIT 1");
+        $oldLimit = $this->limit;
+        $this->limit = 'LIMIT 1';
+        $queryString = $this->queryString();
 
-        $statement->execute($this->values);
+        $results = $this->execute($queryString);
 
-        $query = $statement->fetchAll(\PDO::FETCH_CLASS, $this->className);
-
-        return reset($query) ?: null;
+        $this->limit = $oldLimit;
+        return reset($results) ?: null;
     }
 
     public function where($column, $operator, $value)
     {
-        if (strpos($this->query, 'WHERE') !== false) {
-            $this->query .= " AND {$column} {$operator} ?";
-        } else {
-            $this->query .= " WHERE {$column} {$operator} ?";
-        }
+//        if (strpos($this->where, 'WHERE') !== false) {
+//            $this->where .= " AND {$column} {$operator} ?";
+//        } else {
+//            $this->where .= " WHERE {$column} {$operator} ?";
+//        }
 
+        $this->where[] = "{$column} {$operator} ?";
         $this->values[] = $value;
 
         return $this;
@@ -43,7 +48,7 @@ class QueryBuilder
 
     public function from($table)
     {
-        $this->query = "SELECT * FROM {$table}";
+        $this->table = "SELECT * FROM {$table}";
 
         return $this;
     }
@@ -60,21 +65,44 @@ class QueryBuilder
         return $this;
     }
 
-    public function limit($number)
+    public function limit($limit)
     {
-        $this->query .= " LIMIT $number";
+        $this->limit = " LIMIT {$limit}";
 
         return $this;
     }
 
     public function get()
     {
-        $statement = $this->pdo->prepare($this->query);
+        $queryString = $this->queryString();
+
+        $results = $this->execute($queryString);
+
+        return $results;
+    }
+
+    public function offset($offset)
+    {
+        $this->offset = " OFFSET {$offset}";
+
+        return $this;
+    }
+
+    private function execute($query)
+    {
+        $statement = $this->pdo->prepare($query);
 
         $statement->execute($this->values);
 
-        $users = $statement->fetchAll(\PDO::FETCH_CLASS, $this->className);
+        $results = $statement->fetchAll(\PDO::FETCH_CLASS, $this->className);
 
-        return $users;
+        return $results;
+    }
+
+    private function queryString()
+    {
+        $where = $this->where ? 'WHERE ' . implode(' AND ', $this->where) : '';
+
+        return "{$this->table} {$where}  {$this->limit} {$this->offset}";
     }
 }
