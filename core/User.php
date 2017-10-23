@@ -7,6 +7,6 @@ class User
 {
     public static function query()
     {
-        return App::get('database')->from('users');
+        return App::get('database')->from('users')->stopHetInMij(User::class);
     }
 }
