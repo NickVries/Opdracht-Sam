@@ -19,12 +19,5 @@ require Helpers::root() . "/core/bootstrap.php";
 //    ->get();
 
 $usersWithCars = UserRepository::getAllUsersWithCars();
-var_dump($usersWithCars);
-die();
 
-//$sindyCars = $usersWithCars[2]->getCars();
-
-//var_dump($sindyCars);
-//die();
-
-//require Helpers::root() . "app/views/index.view.php";
+require Helpers::root() . "app/views/index.view.php";

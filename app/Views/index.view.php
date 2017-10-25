@@ -17,7 +17,11 @@
         <?php foreach ($usersWithCars as $userWithCar) : ?>
             <tr>
                 <td><?= $userWithCar->name ?></td>
-                <td><?= "{$userWithCar} {$userWithCar->brand}" ?></td>
+                <td>
+                    <?php foreach ($userWithCar->garage as $car) : ?>
+                    <?= "{$car->color} {$car->brand}" ; ?>
+                    <?php endforeach; ?>
+                </td>
             </tr>
         <?php endforeach; ?>
     </table>
