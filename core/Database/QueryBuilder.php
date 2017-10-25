@@ -14,6 +14,9 @@ class QueryBuilder
     private $offset;
     private $limit = 'LIMIT 18446744073709551615';
     private $table;
+    private $select = [];
+    private $order;
+    private $join = [];
 
     public function __construct($pdo)
     {
@@ -48,7 +51,7 @@ class QueryBuilder
 
     public function from($table)
     {
-        $this->table = "SELECT * FROM {$table}";
+        $this->table = "FROM {$table}";
 
         return $this;
     }
@@ -101,8 +104,39 @@ class QueryBuilder
 
     private function queryString()
     {
+        $select = $this->select ? 'SELECT ' . implode(', ', $this->select) : 'SELECT *';
+        $join = $this->join ? implode(' ', $this->join) : '';
         $where = $this->where ? 'WHERE ' . implode(' AND ', $this->where) : '';
 
-        return "{$this->table} {$where}  {$this->limit} {$this->offset}";
+        return "{$select} {$this->table} {$join} 
+                {$where} {$this->order} {$this->limit} {$this->offset}";
+    }
+
+    public function select(...$select)
+    {
+        $this->select = array_merge($this->select, $select);
+
+        return $this;
+    }
+
+    public function order($order)
+    {
+        $this->order = "ORDER BY {$order}";
+
+        return $this;
+    }
+
+    public function join($table, $firstColumn, $secondColumn)
+    {
+        $this->join[] = "INNER JOIN {$table} ON {$firstColumn}={$secondColumn}";
+
+        return $this;
+    }
+
+    public function leftJoin($table, $firstColumn, $secondColumn)
+    {
+        $this->join[] = "LEFT JOIN {$table} ON {$firstColumn}={$secondColumn}";
+
+        return $this;
     }
 }
