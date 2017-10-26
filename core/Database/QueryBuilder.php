@@ -7,6 +7,7 @@ use Nick\Framework\User;
 
 class QueryBuilder
 {
+    /** @var \PDO */
     private $pdo;
     private $values = [];
     private $className = \stdClass::class;
@@ -32,6 +33,7 @@ class QueryBuilder
         $results = $this->execute($queryString);
 
         $this->limit = $oldLimit;
+
         return reset($results) ?: null;
     }
 
@@ -104,9 +106,10 @@ class QueryBuilder
 
     private function queryString()
     {
-        $select = $this->select ? 'SELECT ' . implode(', ', $this->select) : 'SELECT *';
+        $select = $this->select ? 'SELECT '.implode(', ', $this->select)
+            : 'SELECT *';
         $join = $this->join ? implode(' ', $this->join) : '';
-        $where = $this->where ? 'WHERE ' . implode(' AND ', $this->where) : '';
+        $where = $this->where ? 'WHERE '.implode(' AND ', $this->where) : '';
 
         return "{$select} {$this->table} {$join} 
                 {$where} {$this->order} {$this->limit} {$this->offset}";
@@ -153,6 +156,8 @@ class QueryBuilder
             $statement = $this->pdo->prepare($sql);
 
             $statement->execute($parameters);
+
+            return $this->pdo->lastInsertId();
         } catch (\Exception $e) {
             die($e->getMessage());
         }

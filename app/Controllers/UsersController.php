@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use Nick\Framework\App;
+use Nick\Framework\Database\QueryBuilder;
 
 class UsersController
 {
@@ -15,17 +16,20 @@ class UsersController
 
     public function store()
     {
-        $data = [
+        $userData = [
             'name' => $_POST['name'],
             'age'  => (int)$_POST['age'],
-            'car'  => $_POST['car'],
         ];
 
-        App::get('database')->insertInto('users', $data);
+        $userId = App::get('database')->insertInto('users', $userData);
 
-//        $url = "/usercreated?name=" . urlencode($data['firstname'] . ' ' . $data['lastname']);
-//
-//        header("Location: {$url}");
-        return redirect('users');
+        $userCarData =[
+            'user_id' => $userId,
+            'car_id' => $_POST['car'],
+        ];
+
+        App::get('database')->insertInto('user_car', $userCarData);
+
+        return redirect('');
     }
 }
