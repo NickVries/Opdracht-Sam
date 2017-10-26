@@ -1,5 +1,7 @@
 <?php require 'partials/header.php'; ?>
 
+<h1>Current Users</h1>
+
 <table>
     <tr>
         <th>Users</th>

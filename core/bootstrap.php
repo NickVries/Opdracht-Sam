@@ -17,5 +17,5 @@ function view($name, $data = [])
 
 function redirect($path)
 {
-    header("Location: /{$path}");
+    header("Location: /{$path}");exit();
 }

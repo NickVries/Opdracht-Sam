@@ -51,4 +51,9 @@ class PagesController
     {
         return view('newUser');
     }
+
+    public function newCar()
+    {
+        return view('newCar');
+    }
 }

@@ -3,7 +3,6 @@
 namespace Nick\Framework\Database;
 
 use Nick\Framework\App;
-use Nick\Framework\User;
 
 class QueryBuilder
 {

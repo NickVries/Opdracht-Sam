@@ -3,7 +3,6 @@
 namespace App\Controllers;
 
 use Nick\Framework\App;
-use Nick\Framework\Database\QueryBuilder;
 
 class UsersController
 {
@@ -16,6 +15,12 @@ class UsersController
 
     public function store()
     {
+        if ($_POST['car'] === 'other') {
+            return App::get('router')->direct('newCar', 'POST');
+        } else {
+            $carId = $_POST['car'];
+        }
+
         $userData = [
             'name' => $_POST['name'],
             'age'  => (int)$_POST['age'],
@@ -23,9 +28,18 @@ class UsersController
 
         $userId = App::get('database')->insertInto('users', $userData);
 
-        $userCarData =[
+        if ($_POST['brand'] !== null) {
+            $carData = [
+                'brand' => $_POST['brand'],
+                'color' => $_POST['color'],
+            ];
+
+            $carId = App::get('database')->insertInto('cars', $carData);
+        }
+
+        $userCarData = [
             'user_id' => $userId,
-            'car_id' => $_POST['car'],
+            'car_id'  => $carId,
         ];
 
         App::get('database')->insertInto('user_car', $userCarData);
