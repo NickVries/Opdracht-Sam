@@ -1,6 +1,8 @@
 <?php
 
-namespace Nick\Framework;
+namespace App;
+
+use Nick\Framework\App;
 
 class User
 {

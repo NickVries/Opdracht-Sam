@@ -1,3 +1,9 @@
+html {
+    font-family: arial, sans-serif;
+    background: #e3e3e3;
+    margin: 50px;
+}
+
 table {
     border-collapse: collapse;
     margin: 20px;
@@ -11,4 +17,8 @@ table, th, td {
 
 td {
     vertical-align: top;
+}
+
+input, button, select {
+    margin: 5px 0;
 }

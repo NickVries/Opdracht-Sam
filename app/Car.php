@@ -1,6 +1,6 @@
 <?php
 
-namespace Nick\Framework;
+namespace App;
 
 
 class Car

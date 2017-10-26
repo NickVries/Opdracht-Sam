@@ -3,9 +3,8 @@
 namespace App\Repositories;
 
 use Nick\Framework\App;
-use Nick\Framework\Car;
-use Nick\Framework\User;
-use Nick\Framework\Database\QueryBuilder;
+use App\Car;
+use App\User;
 
 class UserRepository
 {
