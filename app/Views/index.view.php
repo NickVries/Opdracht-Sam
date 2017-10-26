@@ -14,18 +14,20 @@
             <th>Users</th>
             <th>Cars</th>
         </tr>
-        <?php $currentName = ''; foreach ($usersWithCars as $userWithCar) : ?>
+        <?php $currentId = null; foreach ($usersWithCars as $userId => $userWithCar) : ?>
             <?php foreach ($userWithCar->garage as $car) : ?>
                 <tr>
-                    <?php if ($userWithCar->name !== $currentName) : ?>
+                    <?php if ($userId !== $currentId) : ?>
                         <td rowspan="<?= $userWithCar->getCarCount(); ?>"><?= $userWithCar->name; ?></td>
                     <?php endif; ?>
                     <td><?= "{$car->color} {$car->brand}" ?></td>
                 </tr>
-            <?php $currentName = $userWithCar->name; endforeach; ?>
+            <?php $currentId = $userId; endforeach; ?>
         <?php endforeach; ?>
     </table>
 </body>
 </html>
 
-<!--Namen aan de bovenkant van de row uitgelijnd-->
+<!--Alternatieve manier om users 1x te laten voorkomen-->
+<!--Is de user id al een keer in de tabel gezet?-->
+
