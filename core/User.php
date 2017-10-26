@@ -2,10 +2,8 @@
 
 namespace Nick\Framework;
 
-
 class User
 {
-
     public $name;
     public $age;
     public $garage = [];
@@ -18,5 +16,10 @@ class User
     public function getCars()
     {
         return $this->garage;
+    }
+
+    public function getCarCount()
+    {
+        return count($this->garage);
     }
 }

@@ -20,4 +20,6 @@ require Helpers::root() . "/core/bootstrap.php";
 
 $usersWithCars = UserRepository::getAllUsersWithCars();
 
+
+
 require Helpers::root() . "app/views/index.view.php";

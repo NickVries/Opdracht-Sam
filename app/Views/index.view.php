@@ -14,17 +14,20 @@
             <th>Users</th>
             <th>Cars</th>
         </tr>
-        <?php foreach ($usersWithCars as $userWithCar) : ?>
-            <tr>
-                <td><?= $userWithCar->name ?></td>
-                <td>
-                    <?php foreach ($userWithCar->garage as $car) : ?>
-                    <?= "{$car->color} {$car->brand}" ; ?>
-                    <?php endforeach; ?>
-                </td>
-            </tr>
+        <?php $currentName = ''; foreach ($usersWithCars as $userWithCar) : ?>
+            <?php foreach ($userWithCar->garage as $car) : ?>
+                <tr>
+                    <?php if ($userWithCar->name !== $currentName) : ?>
+                        <td rowspan="<?= $userWithCar->getCarCount(); ?>"><?= $userWithCar->name; ?></td>
+                    <?php endif; ?>
+                    <td><?= "{$car->color} {$car->brand}" ?></td>
+                </tr>
+            <?php $currentName = $userWithCar->name; endforeach; ?>
         <?php endforeach; ?>
     </table>
 </body>
 </html>
+
+<!--Namen aan de bovenkant van de row uitgelijnd-->
+<!--ipv carcount, functie op de user defineren: getCarCount();-->
 
