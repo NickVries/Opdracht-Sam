@@ -29,5 +29,3 @@
 </html>
 
 <!--Namen aan de bovenkant van de row uitgelijnd-->
-<!--ipv carcount, functie op de user defineren: getCarCount();-->
-
