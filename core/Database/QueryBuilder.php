@@ -2,6 +2,8 @@
 
 namespace Nick\Framework\Database;
 
+use App\InsertDuplicateException;
+use MongoDB\Driver\Exception\DuplicateKeyException;
 use Nick\Framework\App;
 
 class QueryBuilder
@@ -157,8 +159,11 @@ class QueryBuilder
             $statement->execute($parameters);
 
             return $this->pdo->lastInsertId();
-        } catch (\Exception $e) {
-            die($e->getMessage());
+        } catch (\PDOException $e) {
+            if ($e->getCode() === '23000') {
+                throw new InsertDuplicateException('je moeder');
+            }
+            var_dump($e);die;
         }
     }
 }

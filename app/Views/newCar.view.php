@@ -6,11 +6,11 @@
     <input type="hidden" name="age" value="<?= $_GET['age'] ?>">
     <label>
         Brand:
-        <input type="text" name="brand">
+        <input type="text" name="brand" required>
     </label>
     <label>
         Color:
-        <input type="text" name="color">
+        <input type="text" name="color" required>
     </label>
     <button>Submit</button>
 </form>

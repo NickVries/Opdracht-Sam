@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use Nick\Framework\App;
+use App\InsertDuplicateException;
 
 class UsersController
 {
@@ -34,7 +35,17 @@ class UsersController
                 'color' => $_POST['color'],
             ];
 
-            $carId = App::get('database')->insertInto('cars', $carData);
+            try {
+                $carId = App::get('database')->insertInto('cars', $carData);
+            } catch (InsertDuplicateException $e){
+                $carId = App::get('database')
+                    ->from('cars')
+                    ->select('id')
+                    ->where('color' , '=', $_POST['color'])
+                    ->where('brand', '=', $_POST['brand'])
+                    ->first()
+                    ->id;
+            }
         }
 
         $userCarData = [
