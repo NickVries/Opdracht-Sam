@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Repositories\UserRepository;
+use Nick\Framework\Database\QueryBuilder;
 use Nick\Framework\Request;
 
 class PagesController
@@ -49,7 +50,9 @@ class PagesController
 
     public function newUser()
     {
-        return view('newUser');
+        $allCars = QueryBuilder::query()->from('cars')->get();
+
+        return view('newUser', compact('allCars'));
     }
 
     public function newCar()

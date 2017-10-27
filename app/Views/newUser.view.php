@@ -14,10 +14,9 @@
     <label>
         Car:
         <select name="car">
-            <option value="1">Blue VW</option>
-            <option value="2">Red Volvo</option>
-            <option value="3">Yellow Toyota</option>
-            <option value="4">Blue Volvo</option>
+            <?php foreach ($allCars as $car) : ?>
+                <option value="<?= $car->id ?>"><?= "{$car->color} {$car->brand}" ?></option>
+            <?php endforeach; ?>
             <option value="other">Other</option>
         </select>
     </label>

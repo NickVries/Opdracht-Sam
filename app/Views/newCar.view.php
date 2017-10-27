@@ -2,8 +2,8 @@
 
 <h1>Create new car</h1>
 <form action="/users" method="POST">
-    <input type="hidden" name="name" value="<?= $_POST['name'] ?>">
-    <input type="hidden" name="age" value="<?= $_POST['age'] ?>">
+    <input type="hidden" name="name" value="<?= $_GET['name'] ?>">
+    <input type="hidden" name="age" value="<?= $_GET['age'] ?>">
     <label>
         Brand:
         <input type="text" name="brand">

@@ -16,7 +16,7 @@ class UsersController
     public function store()
     {
         if ($_POST['car'] === 'other') {
-            return App::get('router')->direct('newCar', 'POST');
+            return redirect("newCar?name={$_POST['name']}&age={$_POST['age']}");
         } else {
             $carId = $_POST['car'];
         }
