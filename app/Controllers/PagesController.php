@@ -53,7 +53,18 @@ class PagesController
     {
         $allCars = QueryBuilder::query()->from('cars')->get();
 
-        return view('newUser', compact('allCars'));
+        if (!empty($_GET)) {
+            $usersWithCars = UserRepository::getAllUsersWithCars();
+
+            $usersCars = $usersWithCars[$_GET['id']]->garage;
+
+            $availableCars = array_udiff($allCars, $usersCars,
+                function ($a, $b) {
+                    return $a->id - $b->id;
+                });
+        }
+
+        return view('newUser', compact('allCars', 'availableCars'));
     }
 
     public function newCar()

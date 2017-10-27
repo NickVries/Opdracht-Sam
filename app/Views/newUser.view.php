@@ -11,11 +11,11 @@
         Age:
         <input type="integer" name="age" <?= !empty($_GET['age']) ? "value={$_GET['age']} readonly" : '' ?>>
     </label>
-    <?= empty($_GET) ? '' : "<input type='hidden' name='id' value=\"{$_GET['id']}\">" ?>
+    <?= empty($_GET) ? null : "<input type='hidden' name='id' value=\"{$_GET['id']}\">" ?>
     <label>
         Car:
         <select name="car">
-            <?php foreach ($allCars as $car) : ?>
+            <?php foreach ((empty($_GET) ? $allCars : $availableCars) as $car) : ?>
                 <option value="<?= $car->id ?>"><?= "{$car->color} {$car->brand}" ?></option>
             <?php endforeach; ?>
             <?= empty($_GET) ? '<option value="other">Other</option>' : null ?>

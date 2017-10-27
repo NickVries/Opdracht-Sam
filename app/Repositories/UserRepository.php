@@ -12,7 +12,7 @@ class UserRepository
     {
         $usersWithCars = App::get('database')
             ->select('users.id', 'users.name', 'users.age', 'cars.brand',
-                'cars.color')
+                'cars.color', 'cars.id AS car_id')
             ->from('users')
             ->join('user_car', 'users.id', 'user_car.user_id')
             ->join('cars', 'user_car.car_id', 'cars.id')
@@ -33,6 +33,7 @@ class UserRepository
                 $newArray[$user->id]->garage[] = $newCar;
                 $newCar->color = $user->color;
                 $newCar->brand = $user->brand;
+                $newCar->id = $user->car_id;
             }
         }
         return $newArray;
