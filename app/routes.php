@@ -10,3 +10,4 @@ $router->get('newCar', Pagescontroller::class . '@newCar');
 
 $router->post('users', UsersController::class . '@store');
 $router->post('newCar', Pagescontroller::class . '@newCar');
+$router->post('addCarToUser', UsersController::class . '@addCarToUser');

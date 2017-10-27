@@ -9,9 +9,9 @@ class UsersController
 {
     public function index()
     {
-        $users = App::get('database')->selectAll('users');
-
-        return view('users', compact('users'));
+        return view('users', [
+            'users' => App::get('database')->selectAll('users'),
+        ]);
     }
 
     public function store()
@@ -37,11 +37,11 @@ class UsersController
 
             try {
                 $carId = App::get('database')->insertInto('cars', $carData);
-            } catch (InsertDuplicateException $e){
+            } catch (InsertDuplicateException $e) {
                 $carId = App::get('database')
                     ->from('cars')
                     ->select('id')
-                    ->where('color' , '=', $_POST['color'])
+                    ->where('color', '=', $_POST['color'])
                     ->where('brand', '=', $_POST['brand'])
                     ->first()
                     ->id;
@@ -51,6 +51,26 @@ class UsersController
         $userCarData = [
             'user_id' => $userId,
             'car_id'  => $carId,
+        ];
+
+        App::get('database')->insertInto('user_car', $userCarData);
+
+        return redirect('');
+    }
+
+    public function addCarToUser()
+    {
+        $userId = App::get('database')
+            ->select('id')
+            ->from('users')
+            ->where('name', '=', $_POST['name'])
+            ->where('age', '=', $_POST['age'])
+            ->first()
+            ->id;
+
+        $userCarData = [
+            'user_id' => $userId,
+            'car_id'  => $_POST['car'],
         ];
 
         App::get('database')->insertInto('user_car', $userCarData);

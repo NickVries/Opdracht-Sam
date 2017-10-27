@@ -1,15 +1,15 @@
 <?php require 'partials/header.php'; ?>
 
-<h1>Create new user</h1>
+<?= empty($_GET) ? '<h1>Create new user</h1>' : '<h1>Add a car</h1>' ?>
 
-<form action="/users" method="POST">
+<form action="<?= empty($_GET) ? '/users' : '/addCarToUser' ?>" method="POST">
     <label>
         Name:
-        <input type="text" name="name">
+        <input type="text" name="name" <?= !empty($_GET['name']) ? "value={$_GET['name']} readonly" : '' ?>>
     </label>
     <label>
         Age:
-        <input type="integer" name="age">
+        <input type="integer" name="age" <?= !empty($_GET['age']) ? "value={$_GET['age']} readonly" : '' ?>>
     </label>
     <label>
         Car:
@@ -17,7 +17,7 @@
             <?php foreach ($allCars as $car) : ?>
                 <option value="<?= $car->id ?>"><?= "{$car->color} {$car->brand}" ?></option>
             <?php endforeach; ?>
-            <option value="other">Other</option>
+            <?= empty($_GET) ? '<option value="other">Other</option>' : null ?>
         </select>
     </label>
     <button>Submit</button>
