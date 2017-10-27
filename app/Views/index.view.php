@@ -18,7 +18,7 @@
                 <td><?= "{$car->color} {$car->brand}" ?></td>
                 <?php if ($userId !== $currentId) : ?>
                 <td class="add-car-cell" rowspan="<?= $userWithCar->getCarCount(); ?>">
-                    <a class="add-car-button" href="/newUser?name=<?= $userWithCar->name ?>&age=<?= $userWithCar->age ?>">Add car</a>
+                    <a class="add-car-button" href="/newUser?id=<?= $userId ?>&name=<?= $userWithCar->name ?>&age=<?= $userWithCar->age ?>">Add car</a>
                 </td>
                 <?php endif; ?>
             </tr>

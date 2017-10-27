@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Repositories\UserRepository;
 use Nick\Framework\App;
 use App\InsertDuplicateException;
 
@@ -60,16 +61,8 @@ class UsersController
 
     public function addCarToUser()
     {
-        $userId = App::get('database')
-            ->select('id')
-            ->from('users')
-            ->where('name', '=', $_POST['name'])
-            ->where('age', '=', $_POST['age'])
-            ->first()
-            ->id;
-
         $userCarData = [
-            'user_id' => $userId,
+            'user_id' => $_POST['id'],
             'car_id'  => $_POST['car'],
         ];
 

@@ -11,6 +11,7 @@
         Age:
         <input type="integer" name="age" <?= !empty($_GET['age']) ? "value={$_GET['age']} readonly" : '' ?>>
     </label>
+    <?= empty($_GET) ? '' : "<input type='hidden' name='id' value=\"{$_GET['id']}\">" ?>
     <label>
         Car:
         <select name="car">

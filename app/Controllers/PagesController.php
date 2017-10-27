@@ -11,6 +11,7 @@ class PagesController
     public function home()
     {
         $usersWithCars = UserRepository::getAllUsersWithCars();
+
         return view('index', compact('usersWithCars'));
     }
 
