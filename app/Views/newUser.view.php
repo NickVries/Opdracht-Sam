@@ -1,4 +1,4 @@
-<?php require 'partials/header.php'; ?>
+<?php require 'Partials/header.php'; ?>
 
 <?= empty($_GET) ? '<h1>Create new user</h1>' : '<h1>Add a car</h1>' ?>
 
@@ -23,7 +23,7 @@
     </label>
     <button>Submit</button>
 </form>
-<?php require 'partials/footer.php'; ?>
+<?php require 'Partials/footer.php'; ?>
 
 
 

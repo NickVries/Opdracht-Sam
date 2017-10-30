@@ -12,7 +12,7 @@ foreach ($config['providers'] as $provider)
 function view($name, $data = [])
 {
     extract($data);
-    return require (Helpers::root() . "app/views/{$name}.view.php");
+    return require (Helpers::root() . "app/Views/{$name}.view.php");
 }
 
 function redirect($path)

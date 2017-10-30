@@ -1,4 +1,4 @@
-<?php require 'partials/header.php'; ?>
+<?php require 'Partials/header.php'; ?>
 
 <h1>Current Users</h1>
 
@@ -28,5 +28,5 @@
 
 <a href="/newUser">Create new user</a>
 
-<?php require 'partials/footer.php'; ?>
+<?php require 'Partials/footer.php'; ?>
 
