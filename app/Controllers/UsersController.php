@@ -30,7 +30,7 @@ class UsersController
         Session::setFlash('errors', $errors);
 
         if (!empty($errors)) {
-            return redirect("newUser?name={$_POST['name']}&age={$_POST['age']}");
+                return redirect("newUser?name={$_POST['name']}&age={$_POST['age']}");
         }
 
         if ($_POST['car'] === 'other') {
