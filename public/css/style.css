@@ -60,3 +60,8 @@ label {
 .add-car-cell {
     position: relative;
 }
+
+.error {
+    color: red;
+
+}

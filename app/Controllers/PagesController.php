@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Repositories\UserRepository;
 use Nick\Framework\Database\QueryBuilder;
 use Nick\Framework\Request;
+use Nick\Framework\Session;
 
 class PagesController
 {
@@ -26,8 +27,9 @@ class PagesController
     {
         $contactDetails = [
             'phone' => '+316 12 345 678',
-            'mail' => 'blabla@example.com'
+            'mail'  => 'blabla@example.com',
         ];
+
         return view('contact', compact('contactDetails'));
 
     }
@@ -35,6 +37,7 @@ class PagesController
     public function userCreated()
     {
         $user = $_GET['name'];
+
         return view('user-created', compact('user'));
     }
 
@@ -46,6 +49,7 @@ class PagesController
     public function page404()
     {
         $baseUrl = Request::baseUrl();
+
         return view('404', compact('baseUrl'));
     }
 
@@ -53,7 +57,7 @@ class PagesController
     {
         $allCars = QueryBuilder::query()->from('cars')->get();
 
-        if (!empty($_GET)) {
+        if (!empty($_GET['id'])) {
             $usersWithCars = UserRepository::getAllUsersWithCars();
 
             $usersCars = $usersWithCars[$_GET['id']]->garage;
@@ -64,7 +68,13 @@ class PagesController
                 });
         }
 
-        return view('newUser', compact('allCars', 'availableCars'));
+        $errors = Session::getFlash('errors');
+        $age = $_GET['age'] ?? '';
+        $name = $_GET['name'] ?? '';
+        $readonly = (bool)($_GET['id'] ?? false);
+
+        return view('newUser',
+            compact('allCars', 'availableCars', 'errors', 'name', 'age', 'readonly'));
     }
 
     public function newCar()

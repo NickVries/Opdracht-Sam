@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Repositories\UserRepository;
 use Nick\Framework\App;
 use App\InsertDuplicateException;
+use Nick\Framework\Session;
 
 class UsersController
 {
@@ -17,6 +18,21 @@ class UsersController
 
     public function store()
     {
+        $errors = [];
+        if (empty($_POST['name'])) {
+            $errors['nameError'] = 'Please make sure to enter your name';
+        }
+
+        if (empty($_POST['age'])) {
+            $errors['ageError'] = 'Please make sure to enter your age';
+        }
+
+        Session::setFlash('errors', $errors);
+
+        if (!empty($errors)) {
+            return redirect("newUser?name={$_POST['name']}&age={$_POST['age']}");
+        }
+
         if ($_POST['car'] === 'other') {
             return redirect("newCar?name={$_POST['name']}&age={$_POST['age']}");
         } else {

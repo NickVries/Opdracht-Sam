@@ -9,10 +9,10 @@ foreach ($config['providers'] as $provider)
     (new $provider)->register();
 }
 
-function view($name, $data = [])
+function view($viewName, $data = [])
 {
     extract($data);
-    return require (Helpers::root() . "app/Views/{$name}.view.php");
+    return require (Helpers::root() . "app/Views/{$viewName}.view.php");
 }
 
 function redirect($path)
