@@ -13,7 +13,9 @@ class PagesController
     {
         $usersWithCars = UserRepository::getAllUsersWithCars();
 
-        return view('index', compact('usersWithCars'));
+        $authenticatedUser = Session::get('authenticatedUser');
+
+        return view('index', compact('usersWithCars', 'authenticatedUser'));
     }
 
     public function about()

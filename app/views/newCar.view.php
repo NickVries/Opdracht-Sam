@@ -1,4 +1,4 @@
-<?php require 'Partials/header.php'; ?>
+<?php require 'partials/header.php'; ?>
 
 <h1>Create new car</h1>
 <form action="/users" method="POST">
@@ -15,4 +15,4 @@
     <button>Submit</button>
 </form>
 
-<?php require 'Partials/footer.php'; ?>
+<?php require 'partials/footer.php'; ?>

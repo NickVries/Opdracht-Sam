@@ -63,5 +63,16 @@ label {
 
 .error {
     color: red;
+}
 
+.login-button {
+    float: right;
+    position: relative;
+    right: 150px;
+}
+
+.logout-button {
+    float: right;
+    position: relative;
+    right: 150px;
 }

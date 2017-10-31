@@ -1,4 +1,4 @@
-<?php require 'Partials/header.php';?>
+<?php require 'partials/header.php';?>
 
 <?= empty($_GET['id']) ? '<h1>Create new user</h1>' : '<h1>Add a car</h1>' ?>
 
@@ -14,6 +14,16 @@
     </label>
     <span class="error"><?= !empty($errors['ageError']) ? $errors['ageError'] : ''; ?></span>
     <?= empty($_GET['id']) ? '' : "<input type='hidden' name='id' value=\"{$_GET['id']}\">" ?>
+    <?php if (empty($_GET['id'])): ?>
+    <label>
+        Username:
+        <input type="text" name="username">
+    </label>
+    <label>
+        Password:
+        <input type="password" name="password">
+    </label>
+    <?php endif; ?>
     <label>
         Car:
         <select name="car">
@@ -25,7 +35,7 @@
     </label>
     <button>Submit</button>
 </form>
-<?php require 'Partials/footer.php'; ?>
+<?php require 'partials/footer.php'; ?>
 
 
 

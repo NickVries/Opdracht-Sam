@@ -1,4 +1,13 @@
-<?php require 'Partials/header.php'; ?>
+<?php require 'partials/header.php'; ?>
+
+
+<?= ($authenticatedUser)
+    ? "<a class=\"logout-button\" href=\"/logout\">Logout</a>"
+    : "<a class=\"login-button\" href=\"/login\">Login</a>"
+;?>
+
+<?= ($authenticatedUser) ? "<h2>Welcome {$authenticatedUser->name}!</h2>"
+    : ''; ?>
 
 <h1>Current Users</h1>
 
@@ -17,9 +26,12 @@
                 <?php endif; ?>
                 <td><?= "{$car->color} {$car->brand}" ?></td>
                 <?php if ($userId !== $currentId) : ?>
-                <td class="add-car-cell" rowspan="<?= $userWithCar->getCarCount(); ?>">
-                    <a class="add-car-button" href="/newUser?id=<?= $userId ?>&name=<?= $userWithCar->name ?>&age=<?= $userWithCar->age ?>">Add car</a>
-                </td>
+                    <td class="add-car-cell"
+                        rowspan="<?= $userWithCar->getCarCount(); ?>">
+                        <a class="add-car-button"
+                           href="/newUser?id=<?= $userId ?>&name=<?= $userWithCar->name ?>&age=<?= $userWithCar->age ?>">Add
+                            car</a>
+                    </td>
                 <?php endif; ?>
             </tr>
             <?php $currentId = $userId; endforeach; ?>
@@ -28,5 +40,5 @@
 
 <a href="/newUser">Create new user</a>
 
-<?php require 'Partials/footer.php'; ?>
+<?php require 'partials/footer.php'; ?>
 

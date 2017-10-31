@@ -7,36 +7,50 @@ use Nick\Framework\Session;
 
 class LoginController
 {
-    public function login()
+    public function login($errors = [])
+    {
+        return view('login', compact('errors'));
+    }
+
+    public function logout()
+    {
+        Session::remove('authenticatedUser');
+
+        redirect('');
+    }
+
+    public function loginPost()
     {
         $errors = [];
+
         if (empty($_POST['username'])) {
             $errors['usernameError']
-                = 'Please make sure to enter your username';
+                = 'Please make sure to enter your username.';
         }
 
         if (empty($_POST['password'])) {
             $errors['passwordError']
-                = 'Please make sure to enter your password';
+                = 'Please make sure to enter your password.';
         }
 
-//        if (!empty($errors)) {
-//            return redirect("login");
-//        }
+        if (!empty($_POST['username']) && !empty($_POST['password'])) {
+            $user = QueryBuilder::query()
+                ->select('id', 'name', 'username')
+                ->from('users')
+                ->where('username', '=', $_POST['username'])
+                ->where('password', '=', $_POST['password'])
+                ->first();
 
-        $user = QueryBuilder::query()
-            ->select('id', 'name')
-            ->from('users')
-            ->where('username', '=', $_POST['username'])
-            ->where('password', '=', $_POST['password'])
-            ->first();
+            Session::store('authenticatedUser', $user);
 
-        Session::store($user->id, 'logged in');
+            if ($user === null) {
+                $errors['loginFailed']
+                    = 'The combination of username and password is not valid.';
+            } else {
+                return redirect('');
+            }
+        }
 
-// Check of username + password combi bestaat in database.
-// If so, set $_SESSION['user'] = logged in.
-// redirect to home page.
-
-        return view('login', 'errors');
+        return $this->login($errors);
     }
 }

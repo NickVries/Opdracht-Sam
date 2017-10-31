@@ -20,11 +20,11 @@ class UsersController
     {
         $errors = [];
         if (empty($_POST['name'])) {
-            $errors['nameError'] = 'Please make sure to enter your name';
+            $errors['nameError'] = 'Please make sure to enter your name.';
         }
 
         if (empty($_POST['age'])) {
-            $errors['ageError'] = 'Please make sure to enter your age';
+            $errors['ageError'] = 'Please make sure to enter your age.';
         }
 
         Session::setFlash('errors', $errors);
@@ -42,6 +42,8 @@ class UsersController
         $userData = [
             'name' => $_POST['name'],
             'age'  => (int)$_POST['age'],
+            'username' => $_POST['username'],
+            'password' => $_POST['password'],
         ];
 
         $userId = App::get('database')->insertInto('users', $userData);
