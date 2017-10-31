@@ -35,7 +35,7 @@ class LoginController
 
         if (!empty($_POST['username']) && !empty($_POST['password'])) {
             $user = QueryBuilder::query()
-                ->select('id', 'name', 'username')
+                ->select('id', 'name', 'username', 'age')
                 ->from('users')
                 ->where('username', '=', $_POST['username'])
                 ->where('password', '=', $_POST['password'])

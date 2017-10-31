@@ -57,12 +57,14 @@ class PagesController
 
     public function newUser()
     {
+        $authenticatedUser = Session::get('authenticatedUser');
+
         $allCars = QueryBuilder::query()->from('cars')->get();
 
-        if (!empty($_GET['id'])) {
+        if ($authenticatedUser) {
             $usersWithCars = UserRepository::getAllUsersWithCars();
 
-            $usersCars = $usersWithCars[$_GET['id']]->garage;
+            $usersCars = $usersWithCars[$authenticatedUser->id]->garage;
 
             $availableCars = array_udiff($allCars, $usersCars,
                 function ($a, $b) {
@@ -71,12 +73,12 @@ class PagesController
         }
 
         $errors = Session::getFlash('errors');
-        $age = $_GET['age'] ?? '';
-        $name = $_GET['name'] ?? '';
-        $readonly = (bool)($_GET['id'] ?? false);
+        $age = $authenticatedUser->age ?? '';
+        $name = $authenticatedUser->name ?? '';
+        $readonly = (bool)($authenticatedUser ?? false);
 
         return view('newUser',
-            compact('allCars', 'availableCars', 'errors', 'name', 'age', 'readonly'));
+            compact('allCars', 'availableCars', 'errors', 'name', 'age', 'readonly', 'authenticatedUser'));
     }
 
     public function newCar()

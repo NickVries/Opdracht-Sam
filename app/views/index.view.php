@@ -2,9 +2,11 @@
 
 
 <?= ($authenticatedUser)
-    ? "<a class=\"logout-button\" href=\"/logout\">Logout</a>"
-    : "<a class=\"login-button\" href=\"/login\">Login</a>"
-;?>
+    ? "<a class=\"authenticator-button\" href=\"/logout\">Logout</a>"
+    : "<a class=\"authenticator-button\" href=\"/login\">Login</a>"; ?>
+<?php if (!$authenticatedUser): ?>
+    <a class="authenticator-button" href="/newUser">Register</a>
+<?php endif; ?>
 
 <?= ($authenticatedUser) ? "<h2>Welcome {$authenticatedUser->name}!</h2>"
     : ''; ?>
@@ -15,7 +17,9 @@
     <tr>
         <th>Users</th>
         <th>Cars</th>
+        <?php if ($authenticatedUser) : ?>
         <th>Got another car?</th>
+        <?php endif; ?>
     </tr>
     <?php $currentId = null;
     foreach ($usersWithCars as $userId => $userWithCar) : ?>
@@ -25,20 +29,26 @@
                     <td rowspan="<?= $userWithCar->getCarCount(); ?>"><?= $userWithCar->name ?></td>
                 <?php endif; ?>
                 <td><?= "{$car->color} {$car->brand}" ?></td>
+                <?php if ($authenticatedUser) : ?>
                 <?php if ($userId !== $currentId) : ?>
                     <td class="add-car-cell"
-                        rowspan="<?= $userWithCar->getCarCount(); ?>">
+                        rowspan="<?= $userWithCar->getCarCount(); ?>"
+                    >
+                        <?php if ($userId == $authenticatedUser->id) : ?>
                         <a class="add-car-button"
-                           href="/newUser?id=<?= $userId ?>&name=<?= $userWithCar->name ?>&age=<?= $userWithCar->age ?>">Add
-                            car</a>
+                           href="/newUser"
+                        >
+                            Add car
+                        </a>
+                        <?php endif; ?>
                     </td>
+                <?php endif; ?>
                 <?php endif; ?>
             </tr>
             <?php $currentId = $userId; endforeach; ?>
     <?php endforeach; ?>
 </table>
 
-<a href="/newUser">Create new user</a>
 
 <?php require 'partials/footer.php'; ?>
 

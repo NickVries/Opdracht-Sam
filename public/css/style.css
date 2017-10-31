@@ -65,14 +65,15 @@ label {
     color: red;
 }
 
-.login-button {
+.authenticator-button {
     float: right;
     position: relative;
     right: 150px;
-}
-
-.logout-button {
-    float: right;
-    position: relative;
-    right: 150px;
+    border-radius: 5px;
+    background: dimgrey;
+    display: block;
+    padding: 8px 10px;
+    margin-left: 10px;
+    color: white;
+    text-decoration: none;
 }
