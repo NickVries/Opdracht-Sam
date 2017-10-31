@@ -161,9 +161,9 @@ class QueryBuilder
             return $this->pdo->lastInsertId();
         } catch (\PDOException $e) {
             if ($e->getCode() === '23000') {
-                throw new InsertDuplicateException('je moeder');
+               throw new InsertDuplicateException($e->getMessage());
             }
-            var_dump($e);die;
         }
+        return null;
     }
 }

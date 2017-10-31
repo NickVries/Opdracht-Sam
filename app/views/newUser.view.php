@@ -13,7 +13,7 @@
         <input type="integer" name="age" value="<?= $age ?>" <?= $readonly ? 'readonly' : '' ?>>
     </label>
     <span class="error"><?= !empty($errors['ageError']) ? $errors['ageError'] : ''; ?></span>
-    <?= ($authenticatedUser) ? '' : "<input type='hidden' name='id' value=\"{$authenticatedUser->id}\">" ?>
+    <?= (!$authenticatedUser) ? '' : "<input type='hidden' name='id' value=\"{$authenticatedUser->id}\">" ?>
     <?php if (!$authenticatedUser): ?>
     <label>
         Username:
