@@ -67,13 +67,10 @@ label {
 
 .authenticator-button {
     float: right;
-    position: relative;
-    right: 150px;
     border-radius: 5px;
     background: dimgrey;
     display: block;
-    padding: 8px 10px;
-    margin-left: 10px;
+    padding: 14px 16px;
     color: white;
     text-decoration: none;
 }
@@ -91,7 +88,7 @@ nav ul {
     border-radius: 5px;
 }
 
-nav ul li {
+nav ul li .navbar {
     float: left;
 }
 
@@ -101,7 +98,8 @@ nav ul li a {
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
-    font-family: Arial sans-serif;
+    font-family: arial, sans-serif;
+    border-radius: 5px;
 }
 
 nav ul li a:hover {

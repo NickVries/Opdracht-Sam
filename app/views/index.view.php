@@ -1,9 +1,6 @@
 <?php require 'partials/header.php'; ?>
 
-<?= ($authenticatedUser)
-    ? "<a class=\"authenticator-button\" href=\"/logout\">Logout</a>"
-    : "<a class=\"authenticator-button\" href=\"/login\">Login</a> 
-       <a class=\"authenticator-button\" href=\"/newUser\">Register</a>"; ?>
+
 
 <?= ($authenticatedUser) ? "<h2>Welcome {$authenticatedUser->name}!</h2>"
     : ''; ?>
