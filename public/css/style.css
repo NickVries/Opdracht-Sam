@@ -105,3 +105,16 @@ nav ul li a {
 nav ul li a:hover {
     background-color: #111;
 }
+
+.avatars {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.avatar {
+    width: 180px;
+    height: 180px;
+    border-radius: 5px;
+    margin: 20px;
+}

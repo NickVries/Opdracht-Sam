@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Repositories\UserRepository;
+use GuzzleHttp\Client;
 use Nick\Framework\Database\QueryBuilder;
 use Nick\Framework\Request;
 use Nick\Framework\Session;
@@ -84,5 +85,23 @@ class PagesController
     public function newCar()
     {
         return view('newCar');
+    }
+
+    public function github()
+    {
+        $client = new Client([
+            'base_uri' => 'https://api.github.com'
+        ]);
+        $response = $client->request('GET', 'users');
+
+        $body = (string)$response->getBody();
+
+        $usersArray =  \GuzzleHttp\json_decode($body, true);
+
+        foreach ($usersArray as $user){
+            $avatarUrls[] = $user['avatar_url'];
+        }
+
+        return view('github', compact('avatarUrls'));
     }
 }
