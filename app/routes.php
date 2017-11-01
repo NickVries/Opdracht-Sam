@@ -11,6 +11,7 @@ $router->get('newCar', Pagescontroller::class . '@newCar');
 $router->get('login', LoginController::class . '@login');
 $router->get('logout', LoginController::class . '@logout');
 $router->get('github', PagesController::class . '@github');
+$router->get('pics', PagesController::class . '@pics');
 
 $router->post('users', UsersController::class . '@store');
 $router->post('newCar', Pagescontroller::class . '@newCar');

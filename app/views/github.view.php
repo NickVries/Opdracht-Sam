@@ -1,8 +1,15 @@
-<?php require 'Partials/header.php';?>
+<?php require 'partials/header.php'; ?>
 <div class="avatars">
-<?php foreach ($avatarUrls as $url) : ?>
-<img class="avatar" src="<?= $url ?>" alt="">
-<?php endforeach; ?>
+    <?php foreach ($users as $user) : ?>
+        <div>
+            <img class="avatar" src="<?= $user['avatar'] ?>" alt="">
+        <ul>
+            <?php foreach ($user['classifiers'] as $classifier) : ?>
+                <li><?= "{$classifier->class} {$classifier->score}" ?></li>
+            <?php endforeach; ?>
+        </ul>
+        </div>
+    <?php endforeach; ?>
 </div>
 
-<?php require 'Partials/footer.php'; ?>
+<?php require 'partials/footer.php'; ?>

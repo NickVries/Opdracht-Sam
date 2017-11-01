@@ -79,7 +79,8 @@ class PagesController
         $readonly = (bool)($authenticatedUser ?? false);
 
         return view('newUser',
-            compact('allCars', 'availableCars', 'errors', 'name', 'age', 'readonly', 'authenticatedUser'));
+            compact('allCars', 'availableCars', 'errors', 'name', 'age',
+                'readonly', 'authenticatedUser'));
     }
 
     public function newCar()
@@ -90,18 +91,61 @@ class PagesController
     public function github()
     {
         $client = new Client([
-            'base_uri' => 'https://api.github.com'
+            'base_uri' => 'https://api.github.com',
         ]);
         $response = $client->request('GET', 'users');
 
         $body = (string)$response->getBody();
 
-        $usersArray =  \GuzzleHttp\json_decode($body, true);
+        $usersArray = \GuzzleHttp\json_decode($body, true);
 
-        foreach ($usersArray as $user){
+        foreach ($usersArray as $user) {
             $avatarUrls[] = $user['avatar_url'];
         }
+        $avatarUrls = array_rand(array_flip($avatarUrls), 10);
 
-        return view('github', compact('avatarUrls'));
+        $avatarUrls = [];
+        for ($i = 0; $i < 10; $i++) {
+            $avatarUrls[] = sprintf(
+                'https://avatars0.githubusercontent.com/u/%s?v=4',
+                rand(100, 1000000)
+            );
+        }
+
+        $users = [];
+        foreach ($avatarUrls as $avatarUrl) {
+
+            $watsonClient = new Client([
+                'base_uri' => 'https://watson-api-explorer.mybluemix.net',
+            ]);
+
+            $watsonResponse = $watsonClient->request('POST',
+                'visual-recognition/api/v3/classify?version=2016-05-20', [
+                    'multipart' => [
+                        [
+                            'name'     => 'parameters',
+                            'contents' => \GuzzleHttp\json_encode(['url' => $avatarUrl]),
+                        ],
+                    ],
+                ]);
+
+            $watsonBody = (string)$watsonResponse->getBody();
+
+            $watsonBodyphp = \GuzzleHttp\json_decode($watsonBody);
+
+            $classifiers = $watsonBodyphp->images[0]->classifiers[0]->classes;
+
+            usort($classifiers, function ($a, $b) {
+                return ($b->score - $a->score) * 1000;
+            });
+
+            $top3Classifiers = array_slice($classifiers, 0, 30);
+            $users[] = [
+                'avatar'      => $avatarUrl,
+                'classifiers' => $top3Classifiers,
+            ];
+        }
+
+        return view('github', compact('users'));
     }
 }
