@@ -9,6 +9,8 @@ class User
     public $name;
     public $age;
     public $garage = [];
+    protected $username;
+    protected $password;
 
     public static function query()
     {

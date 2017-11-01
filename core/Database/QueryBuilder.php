@@ -3,7 +3,6 @@
 namespace Nick\Framework\Database;
 
 use App\InsertDuplicateException;
-use MongoDB\Driver\Exception\DuplicateKeyException;
 use Nick\Framework\App;
 
 class QueryBuilder

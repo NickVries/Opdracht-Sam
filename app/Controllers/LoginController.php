@@ -2,20 +2,22 @@
 
 namespace App\Controllers;
 
+use Nick\Framework\Cookies;
 use Nick\Framework\Database\QueryBuilder;
 use Nick\Framework\Session;
 
 class LoginController
 {
-    public function login($errors = [])
+        public function login($errors = [])
     {
-        return view('login', compact('errors'));
+        $authenticatedUser = Session::get('authenticatedUser');
+        return view('login', compact('errors', 'authenticatedUser'));
     }
 
     public function logout()
     {
         Session::remove('authenticatedUser');
-
+        Cookies::eat('user');
         redirect('');
     }
 
@@ -47,6 +49,7 @@ class LoginController
                 $errors['loginFailed']
                     = 'The combination of username and password is not valid.';
             } else {
+                Cookies::make('userId', $user->id, 30);
                 return redirect('');
             }
         }

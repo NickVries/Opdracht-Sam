@@ -1,5 +1,6 @@
 <?php
 
+use App\Services\LoginService;
 use Nick\Framework\Helpers;
 
 $config = require Helpers::root() . 'config.php';
@@ -19,3 +20,5 @@ function redirect($path)
 {
     header("Location: /{$path}");exit();
 }
+
+LoginService::checkLogin();

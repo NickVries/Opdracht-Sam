@@ -1,5 +1,10 @@
 <?php require 'partials/header.php';?>
 
+<?php if ($authenticatedUser) : ?>
+<h1>You're already logged in, <?= $authenticatedUser->name ?>!</h1>
+<?php endif; ?>
+<?php if (!$authenticatedUser) : ?>
+
 <h1>Login</h1>
 
 <form action="/login" method="POST">
@@ -16,5 +21,7 @@
     <button>Submit</button>
     <div class="error"><?= !empty($errors['loginFailed']) ? $errors['loginFailed'] : ''; ?></div>
 </form>
+
+<?php endif; ?>
 
 <?php require 'partials/footer.php'; ?>
