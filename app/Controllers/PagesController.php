@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Repositories\UserRepository;
 use GuzzleHttp\Client;
+use GuzzleHttp\RequestOptions;
 use Nick\Framework\Database\QueryBuilder;
 use Nick\Framework\Request;
 use Nick\Framework\Session;
@@ -147,5 +148,31 @@ class PagesController
         }
 
         return view('github', compact('users'));
+    }
+
+    public function callback()
+    {
+        $client = new Client([
+            'base_uri' => 'https://github.com',
+        ]);
+
+        $response = $client->request('POST', 'login/oauth/access_token', [
+            RequestOptions::FORM_PARAMS => [
+                'client_id'     => 'd77abb39c2b95aa9efb7',
+                'client_secret' => 'cdd81aee1063c06f9583fcbc64218ea6e72a6db1',
+                'code'          => $_GET['code'],
+            ],
+            RequestOptions::HEADERS     => [
+                'Accept' => 'application/json',
+            ],
+        ]);
+
+        $body = (string)$response->getBody();
+
+        $phpBody = \GuzzleHttp\json_decode($body, true);
+
+        $accessToken = $phpBody['access_token'];
+
+
     }
 }

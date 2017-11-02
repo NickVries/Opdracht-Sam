@@ -49,7 +49,10 @@ class LoginController
                 $errors['loginFailed']
                     = 'The combination of username and password is not valid.';
             } else {
-                Cookies::make('userId', $user->id, 30);
+                if ($_POST['cookie'] === 'checked')
+                {
+                    Cookies::make('userId', $user->id, 30);
+                }
                 return redirect('');
             }
         }

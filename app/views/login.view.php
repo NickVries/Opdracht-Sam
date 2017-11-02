@@ -18,6 +18,9 @@
         <input type="password" name="password">
     </label>
     <div class="error"><?= !empty($errors['passwordError']) ? $errors['passwordError'] : ''; ?></div>
+    <label class="checkbox">
+        <input type="checkbox" name="cookie" value="checked"> Keep Shady logged in.
+    </label>
     <button>Submit</button>
     <div class="error"><?= !empty($errors['loginFailed']) ? $errors['loginFailed'] : ''; ?></div>
 </form>
