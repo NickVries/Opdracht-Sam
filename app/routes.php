@@ -13,8 +13,10 @@ $router->get('logout', LoginController::class . '@logout');
 $router->get('github', PagesController::class . '@github');
 $router->get('pics', PagesController::class . '@pics');
 $router->get('callback', PagesController::class . '@callback');
+$router->get('edit-bio', PagesController::class . '@editBio');
 
 $router->post('users', UsersController::class . '@store');
 $router->post('newCar', Pagescontroller::class . '@newCar');
 $router->post('addCarToUser', UsersController::class . '@addCarToUser');
 $router->post('login', LoginController::class . '@loginPost');
+$router->post('save-bio', UsersController::class . '@saveBio');

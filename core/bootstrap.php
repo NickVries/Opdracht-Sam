@@ -20,5 +20,3 @@ function redirect($path)
 {
     header("Location: /{$path}");exit();
 }
-
-LoginService::checkLogin();

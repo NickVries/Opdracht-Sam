@@ -3,8 +3,10 @@
 namespace App\Controllers;
 
 use App\Repositories\UserRepository;
+use App\Services\GithubService;
 use GuzzleHttp\Client;
 use GuzzleHttp\RequestOptions;
+use Nick\Framework\App;
 use Nick\Framework\Database\QueryBuilder;
 use Nick\Framework\Request;
 use Nick\Framework\Session;
@@ -13,9 +15,12 @@ class PagesController
 {
     public function home()
     {
+        $authenticatedUser = null;
         $usersWithCars = UserRepository::getAllUsersWithCars();
 
-        $authenticatedUser = Session::get('authenticatedUser');
+        if (App::get('loginService')->checkLogin()) {
+            $authenticatedUser = App::get('loginService')->getUser();
+        }
 
         return view('index', compact('usersWithCars', 'authenticatedUser'));
     }
@@ -173,6 +178,16 @@ class PagesController
 
         $accessToken = $phpBody['access_token'];
 
+        Session::store('accessToken', $accessToken);
 
+        redirect('');
     }
+
+    public function editBio()
+    {
+        $bio = App::get('loginService')->getUser()->bio;
+
+        return view('editBio', compact('bio'));
+    }
+
 }

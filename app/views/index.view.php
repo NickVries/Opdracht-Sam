@@ -1,7 +1,6 @@
 <?php require 'partials/header.php'; ?>
 
 
-
 <?= ($authenticatedUser) ? "<h2>Welcome {$authenticatedUser->name}!</h2>"
     : ''; ?>
 
@@ -12,7 +11,7 @@
         <th>Users</th>
         <th>Cars</th>
         <?php if ($authenticatedUser) : ?>
-        <th>Got another car?</th>
+            <th>Got another car?</th>
         <?php endif; ?>
     </tr>
     <?php $currentId = null;
@@ -24,19 +23,19 @@
                 <?php endif; ?>
                 <td><?= "{$car->color} {$car->brand}" ?></td>
                 <?php if ($authenticatedUser) : ?>
-                <?php if ($userId !== $currentId) : ?>
-                    <td class="add-car-cell"
-                        rowspan="<?= $userWithCar->getCarCount(); ?>"
-                    >
-                        <?php if ($userId == $authenticatedUser->id) : ?>
-                        <a class="add-car-button"
-                           href="/newUser"
+                    <?php if ($userId !== $currentId) : ?>
+                        <td class="add-car-cell"
+                            rowspan="<?= $userWithCar->getCarCount(); ?>"
                         >
-                            Add car
-                        </a>
-                        <?php endif; ?>
-                    </td>
-                <?php endif; ?>
+                            <?php if ($userId == $authenticatedUser->id) : ?>
+                                <a class="add-car-button"
+                                   href="/newUser"
+                                >
+                                    Add car
+                                </a>
+                            <?php endif; ?>
+                        </td>
+                    <?php endif; ?>
                 <?php endif; ?>
             </tr>
             <?php $currentId = $userId; endforeach; ?>

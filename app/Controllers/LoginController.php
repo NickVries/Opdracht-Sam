@@ -2,6 +2,8 @@
 
 namespace App\Controllers;
 
+use App\Services\LoginService;
+use Nick\Framework\App;
 use Nick\Framework\Cookies;
 use Nick\Framework\Database\QueryBuilder;
 use Nick\Framework\Session;
@@ -16,8 +18,7 @@ class LoginController
 
     public function logout()
     {
-        Session::remove('authenticatedUser');
-        Cookies::eat('user');
+        App::get('loginService')->logout();
         redirect('');
     }
 
@@ -51,7 +52,7 @@ class LoginController
             } else {
                 if ($_POST['cookie'] === 'checked')
                 {
-                    Cookies::make('userId', $user->id, 30);
+                    Cookies::make('userId', $user->id, 3600);
                 }
                 return redirect('');
             }

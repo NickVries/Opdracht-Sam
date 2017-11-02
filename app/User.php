@@ -11,6 +11,8 @@ class User
     public $garage = [];
     protected $username;
     protected $password;
+    public $id;
+    public $bio;
 
     public static function query()
     {

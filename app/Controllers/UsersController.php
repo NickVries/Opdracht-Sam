@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Services\GithubService;
 use Nick\Framework\App;
 use App\InsertDuplicateException;
 use Nick\Framework\Session;
@@ -105,5 +106,10 @@ class UsersController
         App::get('database')->insertInto('user_car', $userCarData);
 
         return redirect('');
+    }
+
+    public function saveBio()
+    {
+        App::get('githubService')->saveToUser('bio', $_POST['bio']);
     }
 }

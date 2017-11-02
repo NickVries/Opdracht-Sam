@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Services\GithubService;
+use App\Services\LoginService;
 use Nick\Framework\App;
 use Nick\Framework\Contracts\ServiceProviderInterface;
 use Nick\Framework\Database\Connector;
@@ -31,5 +33,9 @@ class AppServiceProvider implements ServiceProviderInterface
         $routes = (Helpers::root() . '/app/routes.php');
 
         App::bind('router', Router::load($routes));
+
+        App::bind('loginService', new LoginService());
+
+        App::bind('githubService', new GithubService());
     }
 }
